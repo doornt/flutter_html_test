@@ -8,7 +8,7 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
-  flutter_html_render: ^0.1.6
+  flutter_html_render: ^0.1.8
   flutter:
     sdk: flutter
 
