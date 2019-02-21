@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html_render/flutter_html_render.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 void main() => runApp(MyApp());
 
@@ -44,6 +46,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  HtmlRender render;
+
+  Future<String> loadAsset() async {
+    return await rootBundle.loadString('assets/views/main.pug.json');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadAsset().then((fileStr){
+      setState(() {
+        render = HtmlRender(fileStr);
+      });
+    });
+  }
+
+
   int _counter = 0;
 
   void _incrementCounter() {
@@ -91,9 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
+            render?.toWidget({}) ?? Text("placeholder"),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,
